@@ -5,13 +5,14 @@ import {
 import Contacts from "./screens/Contacts";
 import Profile  from "./screens/Profile";
 
-const StackNavigator = createStackNavigator({
-  Contacts: {
-    screen: Contacts
+const StackNavigator = createStackNavigator(
+  {
+    Contacts,
+    Profile
   },
-  Profile: {
-    screen: Profile
+  {
+    initialRouteName: 'Contacts'
   }
-});
+);
 
 export default createAppContainer(StackNavigator);
