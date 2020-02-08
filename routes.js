@@ -13,6 +13,7 @@ import Favorites from "./screens/Favorites";
 import User      from "./screens/User";
 import React     from "react";
 import colors    from "./utils/colors";
+import Options   from "./screens/Options";
 
 const getTabBarIcon = (icon) => ({tintColor}) => (
   <MaterialIcons name={icon} size={26} style={{color: tintColor}}/>
@@ -44,8 +45,10 @@ const FavoritesScreen = createStackNavigator({
 const UsersScreen = createStackNavigator(
   {
     User,
+    Options,
   },
   {
+    mode: 'modal',
     initialRouteName : 'User',
     navigationOptions: {
       tabBarIcon: getTabBarIcon('person')
