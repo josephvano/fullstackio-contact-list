@@ -1,6 +1,7 @@
 import {
   createStackNavigator,
   createBottomTabNavigator,
+  createDrawerNavigator,
   createAppContainer
 } from 'react-navigation';
 import {
@@ -19,6 +20,10 @@ const getTabBarIcon = (icon) => ({tintColor}) => (
   <MaterialIcons name={icon} size={26} style={{color: tintColor}}/>
 );
 
+const getDrawerIcon = (icon) => ({tintColor}) => (
+  <MaterialIcons name={icon} size={22} style={{color: tintColor}}/>
+);
+
 const ContactsScreen = createStackNavigator(
   {
     Contacts,
@@ -27,7 +32,7 @@ const ContactsScreen = createStackNavigator(
   {
     initialRouteName : 'Contacts',
     navigationOptions: {
-      tabBarIcon: getTabBarIcon('list')
+      drawerIcon: getDrawerIcon('list')
     }
   }
 );
@@ -38,7 +43,7 @@ const FavoritesScreen = createStackNavigator({
 }, {
   initialRouteName : 'Favorites',
   navigationOptions: {
-    tabBarIcon: getTabBarIcon('star')
+    drawerIcon: getDrawerIcon('star')
   }
 });
 
@@ -51,10 +56,18 @@ const UsersScreen = createStackNavigator(
     mode: 'modal',
     initialRouteName : 'User',
     navigationOptions: {
-      tabBarIcon: getTabBarIcon('person')
+      drawerIcon: getDrawerIcon('person')
     }
   }
 );
+
+const DrawerNavigator = createDrawerNavigator({
+  Contacts : ContactsScreen,
+  Favorites: FavoritesScreen,
+  User     : UsersScreen
+}, {
+  initialRouteName: 'Contacts'
+});
 
 const TabNavigator = createBottomTabNavigator({
   Contacts : ContactsScreen,
@@ -74,4 +87,4 @@ const TabNavigator = createBottomTabNavigator({
   }
 });
 
-export default createAppContainer(TabNavigator);
+export default createAppContainer(DrawerNavigator);

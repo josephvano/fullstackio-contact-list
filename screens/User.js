@@ -11,12 +11,20 @@ import {fetchUserContact} from "../utils/api";
 import ContactThumbnail   from "../components/ContactThumbnail";
 
 export default class User extends React.Component {
-  static navigationOptions = ({navigation: { navigate }}) => ({
+  static navigationOptions = ({navigation: { navigate, openDrawer }}) => ({
     title          : 'Me',
     headerTintColor: 'white',
     headerStyle    : {
       backgroundColor: colors.blue
     },
+    headerLeft: (
+      <MaterialIcons
+        name={'menu'}
+        size={32}
+        style={{color: 'white', marginLeft: 20}}
+        onPress={() => openDrawer() }
+      />
+    ),
     headerRight    : (
       <MaterialIcons
         name="settings"
