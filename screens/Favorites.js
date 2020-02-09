@@ -9,6 +9,7 @@ import {
 
 import ContactThumbnail from '../components/ContactThumbnail';
 import {fetchContacts}  from "../utils/api";
+import store            from "../store";
 
 const keyExtractor = ({phone}) => phone;
 
@@ -18,26 +19,34 @@ export default class Favorites extends React.Component {
   };
 
   state = {
-    contacts: [],
-    loading : true,
-    error   : false
+    contacts: store.getState().contacts,
+    loading : store.getState().isFetchingContacts,
+    error   : store.getState().error
   };
 
   async componentDidMount() {
-    try {
+    const { contacts } = this.state;
+
+    this.unsubscribe = store.onChange(() => {
+      this.setState({
+        contacts: store.getState().contacts,
+        loading : store.getState().isFetchingContacts,
+        error   : store.getState().error
+      })
+    });
+
+    if (contacts.length === 0) {
       const contacts = await fetchContacts();
 
-      this.setState({
+      store.setState({
         contacts,
-        loading: false,
-        error  : false
+        isFetchingContacts: false
       })
-    } catch (er) {
-      this.setState({
-        error  : true,
-        loading: false
-      });
     }
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe();
   }
 
   renderFavoriteThumbnail = ({item}) => {
